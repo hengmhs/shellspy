@@ -45,3 +45,12 @@ func CreateTextFile(fileName string) {
 	}
 	defer file.Close()
 }
+
+func WriteToTextFile(fileName, command, output string) {
+	// Open the file
+	// Write the command with >
+	// e.g. > ls
+	// Create new line
+	// Write the output
+	// Close the file
+}

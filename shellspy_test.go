@@ -7,6 +7,9 @@ import (
 	"testing"
 )
 
+// why don't I have to import shellspy.CommandFromString?
+// is it because i'm using the package shellspy?
+
 func TestCommandFromStringReturnsExecCmdObject(t *testing.T) {
 	cmd := exec.Command("ls")
 	want := cmd
