@@ -1,7 +1,9 @@
 package shellspy
 
 import (
-	"io"
+	"bufio"
+	"fmt"
+	"log"
 	"os/exec"
 	"strings"
 )
@@ -15,6 +17,22 @@ func CommandFromString(input string) (*exec.Cmd, error) {
 	// https://pkg.go.dev/os/exec#Command
 }
 
-func ReadInputLoop(input io.Reader) {
-
+func ReadInputLoop(scanner bufio.Scanner) {
+	for true {
+		scanner.Scan()
+		text := scanner.Text()
+		input := text
+		if input == "exit" {
+			break
+		}
+		cmd, err := CommandFromString(input)
+		if err != nil {
+			log.Fatal(err)
+		}
+		// todo: sort out error handling
+		var out strings.Builder
+		cmd.Stdout = &out
+		cmd.Run()
+		fmt.Printf("%v", out.String())
+	}
 }

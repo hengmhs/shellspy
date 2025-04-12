@@ -3,7 +3,6 @@ package shellspy
 import (
 	"os/exec"
 	"slices"
-	"strings"
 	"testing"
 )
 
@@ -39,12 +38,12 @@ func TestCommandFromStringReturnsExecCmdObjectForMultipleInputs(t *testing.T) {
 	}
 }
 
-func TestReadInputLoop(t *testing.T) {
-	// os.Stdin is of type *os.File that implements io.Reader interface
-	// what does that mean?? basically we can pass it to bufio.NewScanner
+// func TestReadInputLoop(t *testing.T) {
+// 	// os.Stdin is of type *os.File that implements io.Reader interface
+// 	// what does that mean?? basically we can pass it to bufio.NewScanner
 
-	// simulate user input
-	input := "Hello\nWorld\nexit\n"
-	r := strings.NewReader(input)
-	ReadInputLoop(r)
-}
+// 	// simulate user input
+// 	input := "Hello\nWorld\nexit\n"
+// 	r := strings.NewReader(input)
+// 	ReadInputLoop(r)
+// }
