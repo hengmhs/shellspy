@@ -1,6 +1,7 @@
 package shellspy
 
 import (
+	"os"
 	"os/exec"
 	"slices"
 	"testing"
@@ -47,3 +48,22 @@ func TestCommandFromStringReturnsExecCmdObjectForMultipleInputs(t *testing.T) {
 // 	r := strings.NewReader(input)
 // 	ReadInputLoop(r)
 // }
+
+func TestCreateShellSpy(t *testing.T) {
+
+	// Check that mock file does not exist
+	_, err := os.Stat("shellspy_test.txt")
+	if !os.IsNotExist(err) {
+		t.Error("Mock file already exists")
+	}
+
+	CreateTextFile("shellspy_test.txt")
+
+	_, err = os.Stat("shellspy_test.txt")
+	if os.IsNotExist(err) {
+		t.Error("Mock file was not created")
+	}
+
+	// Clean up
+	os.Remove("shellspy_test.txt")
+}

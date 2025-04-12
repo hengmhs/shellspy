@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"log"
+	"os"
 	"os/exec"
 	"strings"
 )
@@ -35,4 +36,12 @@ func ReadInputLoop(scanner bufio.Scanner) {
 		cmd.Run()
 		fmt.Printf("%v", out.String())
 	}
+}
+
+func CreateTextFile(fileName string) {
+	file, err := os.Create(fileName)
+	if err != nil {
+		fmt.Printf("Failed to create file: %v", err)
+	}
+	defer file.Close()
 }
