@@ -26,6 +26,7 @@ func ReadInputLoop(scanner bufio.Scanner) {
 		text := scanner.Text()
 		input := text
 		if input == "exit" {
+			WriteToTextFile(transcript, "exit", "")
 			break
 		}
 		cmd, err := CommandFromString(input)
@@ -52,7 +53,7 @@ func CreateTextFile(fileName string) {
 func WriteToTextFile(fileName, command, output string) {
 	// Open the file and append only
 	// 0644 is file permissions
-	file, err := os.OpenFile(fileName, os.O_APPEND, 0644)
+	file, err := os.OpenFile(fileName, os.O_APPEND|os.O_WRONLY, 0644)
 	if err != nil {
 		panic(err)
 	}

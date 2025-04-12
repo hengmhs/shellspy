@@ -97,6 +97,9 @@ func TestWriteToTextFile(t *testing.T) {
 
 	content := string(data)
 	fmt.Println(content)
+	// TODO check that content has the following:
+	// > echo hello
+	// hello
 
 	// Clean up
 	os.Remove(mockFile)
