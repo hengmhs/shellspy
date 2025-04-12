@@ -101,6 +101,8 @@ func TestWriteToTextFile(t *testing.T) {
 	// > echo hello
 	// hello
 
+	t.Fatal("TODO: Implement content check")
+
 	// Clean up
 	os.Remove(mockFile)
 }
