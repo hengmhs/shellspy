@@ -13,16 +13,14 @@ var input string
 
 func main() {
 	scanner := bufio.NewScanner(os.Stdin)
-
+	fmt.Println("Recording session to 'shellspy.txt'")
 	for true {
-		fmt.Println("input: ")
 		scanner.Scan()
 		text := scanner.Text()
 		input = text
 		if input == "exit" {
 			break
 		}
-		fmt.Println("your input: ", text)
 		cmd, err := shellspy.CommandFromString(input)
 		// we can print out single line commands like ls
 		// but commands with args need extra work
@@ -38,24 +36,3 @@ func main() {
 	}
 
 }
-
-// package main
-
-// import (
-// 	"fmt"
-// 	"log"
-// 	"os/exec"
-// 	"strings"
-// )
-
-// func main() {
-// 	cmd := exec.Command("ls")
-// 	cmd.Stdin = strings.NewReader("some input")
-// 	var out strings.Builder
-// 	cmd.Stdout = &out
-// 	err := cmd.Run()
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-// 	fmt.Printf("in all caps: %q\n", out.String())
-// }

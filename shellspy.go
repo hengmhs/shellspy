@@ -3,10 +3,12 @@ package shellspy
 import (
 	"io"
 	"os/exec"
+	"strings"
 )
 
 func CommandFromString(input string) (*exec.Cmd, error) {
-	cmd := exec.Command(input)
+	inputs := strings.Split(input, " ")
+	cmd := exec.Command(inputs[0], inputs[1:]...)
 	return cmd, nil
 	// how do I do error handling for exec.Command?
 	// e.g. if the input is not a terminal command
