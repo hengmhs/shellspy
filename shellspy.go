@@ -19,6 +19,8 @@ func CommandFromString(input string) (*exec.Cmd, error) {
 }
 
 func ReadInputLoop(scanner bufio.Scanner) {
+	transcript := "shellspy.txt"
+	CreateTextFile(transcript)
 	for true {
 		scanner.Scan()
 		text := scanner.Text()
@@ -34,6 +36,7 @@ func ReadInputLoop(scanner bufio.Scanner) {
 		var out strings.Builder
 		cmd.Stdout = &out
 		cmd.Run()
+		WriteToTextFile(transcript, input, out.String())
 		fmt.Printf("%v", out.String())
 	}
 }
@@ -47,10 +50,16 @@ func CreateTextFile(fileName string) {
 }
 
 func WriteToTextFile(fileName, command, output string) {
-	// Open the file
+	// Open the file and append only
+	// 0644 is file permissions
+	file, err := os.OpenFile(fileName, os.O_APPEND, 0644)
+	if err != nil {
+		panic(err)
+	}
+	// Closes the file when the function exits
+	defer file.Close()
 	// Write the command with >
-	// e.g. > ls
-	// Create new line
+	_, err = fmt.Fprintf(file, "> %v \n", command)
 	// Write the output
-	// Close the file
+	_, err = fmt.Fprintf(file, "%v \n", output)
 }

@@ -1,6 +1,7 @@
 package shellspy
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
 	"slices"
@@ -52,21 +53,51 @@ func TestCommandFromStringReturnsExecCmdObjectForMultipleInputs(t *testing.T) {
 // 	ReadInputLoop(r)
 // }
 
-func TestCreateShellSpy(t *testing.T) {
+func TestCreateTextFile(t *testing.T) {
+
+	mockFile := "shellspy_test.txt"
 
 	// Check that mock file does not exist
-	_, err := os.Stat("shellspy_test.txt")
+	_, err := os.Stat(mockFile)
 	if !os.IsNotExist(err) {
 		t.Error("Mock file already exists")
 	}
 
-	CreateTextFile("shellspy_test.txt")
+	CreateTextFile(mockFile)
 
-	_, err = os.Stat("shellspy_test.txt")
+	_, err = os.Stat(mockFile)
 	if os.IsNotExist(err) {
 		t.Error("Mock file was not created")
 	}
 
 	// Clean up
-	os.Remove("shellspy_test.txt")
+	os.Remove(mockFile)
+}
+
+func TestWriteToTextFile(t *testing.T) {
+
+	mockFile := "shellspy_test2.txt"
+
+	// todo: try out t.Parallel() for all the tests
+
+	// Check that mock file does not exist
+	_, err := os.Stat(mockFile)
+	if !os.IsNotExist(err) {
+		t.Error("Mock file already exists")
+	}
+
+	CreateTextFile(mockFile)
+
+	WriteToTextFile(mockFile, "echo hello", "hello")
+
+	data, err := os.ReadFile(mockFile)
+	if err != nil {
+		t.Error("Unable to read mock file")
+	}
+
+	content := string(data)
+	fmt.Println(content)
+
+	// Clean up
+	os.Remove(mockFile)
 }
