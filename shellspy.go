@@ -21,7 +21,7 @@ func CommandFromString(input string) (*exec.Cmd, error) {
 func ReadInputLoop(scanner bufio.Scanner) {
 	const transcript = "shellspy.txt"
 	CreateTextFile(transcript)
-	for true {
+	for {
 		scanner.Scan()
 		text := scanner.Text()
 		input := text
