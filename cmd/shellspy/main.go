@@ -22,10 +22,6 @@ func main() {
 			break
 		}
 		cmd, err := shellspy.CommandFromString(input)
-		// we can print out single line commands like ls
-		// but commands with args need extra work
-		// e.g. echo text or tr "a-z" "A-Z" < my_text.txt
-		// mv test.py new_test.py
 		if err != nil {
 			log.Fatal(err)
 		}

@@ -10,3 +10,5 @@
 
 [ ] Implement a remote shell
 [ ] Add auth
+[ ] Support pipes: |
+[ ] Support input redirection operator <
