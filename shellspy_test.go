@@ -55,7 +55,7 @@ func TestCommandFromStringReturnsExecCmdObjectForMultipleInputs(t *testing.T) {
 
 func TestCreateTextFile(t *testing.T) {
 
-	mockFile := "shellspy_test.txt"
+	const mockFile = "shellspy_test.txt"
 
 	// Check that mock file does not exist
 	_, err := os.Stat(mockFile)
@@ -76,7 +76,7 @@ func TestCreateTextFile(t *testing.T) {
 
 func TestWriteToTextFile(t *testing.T) {
 
-	mockFile := "shellspy_test2.txt"
+	const mockFile = "shellspy_test2.txt"
 
 	// todo: try out t.Parallel() for all the tests
 
