@@ -1,3 +1,9 @@
+# Usage
+
+In your terminal, use go run ./cmd/shellspy
+
+Type "exit" without the quotation marks to exit
+
 # Goals
 
 [x] Goal 1: creating a command from a string
