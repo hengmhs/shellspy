@@ -8,7 +8,7 @@
     - echo
     - mv
 [x] Goal 4: basic shell
-[ ] Goal 5: transcript recording
+[x] Goal 5: transcript recording
 
 # Stretch Goals
 

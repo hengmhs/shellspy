@@ -1,7 +1,6 @@
 package shellspy
 
 import (
-	"fmt"
 	"os"
 	"os/exec"
 	"slices"
@@ -12,6 +11,9 @@ import (
 // is it because i'm using the package shellspy?
 
 func TestCommandFromStringReturnsExecCmdObject(t *testing.T) {
+
+	t.Parallel()
+
 	cmd := exec.Command("ls")
 	want := cmd
 	got, err := CommandFromString("ls")
@@ -28,6 +30,9 @@ func TestCommandFromStringReturnsExecCmdObject(t *testing.T) {
 }
 
 func TestCommandFromStringReturnsExecCmdObjectForMultipleInputs(t *testing.T) {
+
+	t.Parallel()
+
 	cmd := exec.Command("echo", "Hello")
 	want := cmd
 	got, err := CommandFromString("echo Hello")
@@ -43,17 +48,9 @@ func TestCommandFromStringReturnsExecCmdObjectForMultipleInputs(t *testing.T) {
 	}
 }
 
-// func TestReadInputLoop(t *testing.T) {
-// 	// os.Stdin is of type *os.File that implements io.Reader interface
-// 	// what does that mean?? basically we can pass it to bufio.NewScanner
-
-// 	// simulate user input
-// 	input := "Hello\nWorld\nexit\n"
-// 	r := strings.NewReader(input)
-// 	ReadInputLoop(r)
-// }
-
 func TestCreateTextFile(t *testing.T) {
+
+	t.Parallel()
 
 	const mockFile = "shellspy_test.txt"
 
@@ -78,7 +75,7 @@ func TestWriteToTextFile(t *testing.T) {
 
 	const mockFile = "shellspy_test2.txt"
 
-	// todo: try out t.Parallel() for all the tests
+	t.Parallel()
 
 	// Check that mock file does not exist
 	_, err := os.Stat(mockFile)
@@ -95,14 +92,14 @@ func TestWriteToTextFile(t *testing.T) {
 		t.Error("Unable to read mock file")
 	}
 
-	content := string(data)
-	fmt.Println(content)
-	// TODO check that content has the following:
-	// > echo hello
-	// hello
+	got := string(data)
+	want := "> echo hello \nhello \n"
 
-	t.Fatal("TODO: Implement content check")
+	if want != got {
+		t.Error("Mock transcript does not match input")
+	}
 
 	// Clean up
 	os.Remove(mockFile)
+
 }
