@@ -25,4 +25,4 @@ Type "exit" without the quotation marks to exit
 
 # Acknowledgements
 
-Based on Bitfield's Consulting [shellspy project](https://github.com/bitfield/shellspy)
+Based on Bitfield Consulting's [shellspy project](https://github.com/bitfield/shellspy)
