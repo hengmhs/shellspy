@@ -18,7 +18,7 @@ func CommandFromString(input string) *exec.Cmd {
 	return cmd
 }
 
-func ReadInputLoop(scanner *bufio.Scanner, transcript string) {
+func ReadInputLoop(scanner *bufio.Scanner, transcript string, transcriptFile *os.File) {
 	for {
 		scanner.Scan()
 		text := scanner.Text()
@@ -26,22 +26,34 @@ func ReadInputLoop(scanner *bufio.Scanner, transcript string) {
 		if input == "exit" {
 			WriteToTextFile(transcript, "exit", "")
 			break
+			// TODO: maybe return something here to check that the loop has broken?
 		}
 		cmd := CommandFromString(input)
 		var out strings.Builder
 		cmd.Stdout = &out
-		cmd.Run()
+		err := cmd.Run()
+
+		if err != nil {
+			fmt.Printf("Error running command: %v", err)
+			// TODO: write a test that shows this error handling is working
+		}
+
+		// Tried to use cmd.Stdout = transcriptFile but that didn't do anything..
+		// How do I get the text formatting if I pipe it out directly?
+
 		WriteToTextFile(transcript, input, out.String())
+		// fmt.Printf("> %v\n", input)
 		fmt.Printf("%v", out.String())
 	}
 }
 
-func CreateTextFile(fileName string) {
+func CreateTextFile(fileName string) *os.File {
 	file, err := os.Create(fileName)
 	if err != nil {
 		fmt.Printf("Failed to create file: %v", err)
 	}
 	defer file.Close()
+	return file
 }
 
 func WriteToTextFile(fileName, command, output string) {
@@ -60,8 +72,8 @@ func WriteToTextFile(fileName, command, output string) {
 }
 
 func StartMainLoop() {
-	const transcript = "shellspy.txt"
-	CreateTextFile(transcript)
+	const transcriptFileName = "shellspy.txt"
+	transcriptFile := CreateTextFile(transcriptFileName)
 	scanner := bufio.NewScanner(os.Stdin)
-	ReadInputLoop(scanner, transcript)
+	ReadInputLoop(scanner, transcriptFileName, transcriptFile)
 }
