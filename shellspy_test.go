@@ -1,14 +1,12 @@
-package shellspy
+package shellspy_test
 
 import (
 	"os"
 	"os/exec"
+	"shellspy"
 	"slices"
 	"testing"
 )
-
-// why don't I have to import shellspy.CommandFromString?
-// is it because i'm using the package shellspy?
 
 func TestCommandFromStringReturnsExecCmdObject(t *testing.T) {
 
@@ -16,7 +14,7 @@ func TestCommandFromStringReturnsExecCmdObject(t *testing.T) {
 
 	cmd := exec.Command("ls")
 	want := cmd
-	got, err := CommandFromString("ls")
+	got, err := shellspy.CommandFromString("ls")
 
 	if err != nil {
 		t.Error("Err: ", err)
@@ -35,7 +33,7 @@ func TestCommandFromStringReturnsExecCmdObjectForMultipleInputs(t *testing.T) {
 
 	cmd := exec.Command("echo", "Hello")
 	want := cmd
-	got, err := CommandFromString("echo Hello")
+	got, err := shellspy.CommandFromString("echo Hello")
 
 	if err != nil {
 		t.Error("Err: ", err)
@@ -54,20 +52,18 @@ func TestCreateTextFile(t *testing.T) {
 
 	const mockFile = "shellspy_test.txt"
 
-	// Check that mock file does not exist
 	_, err := os.Stat(mockFile)
 	if !os.IsNotExist(err) {
 		t.Error("Mock file already exists")
 	}
 
-	CreateTextFile(mockFile)
+	shellspy.CreateTextFile(mockFile)
 
 	_, err = os.Stat(mockFile)
 	if os.IsNotExist(err) {
 		t.Error("Mock file was not created")
 	}
 
-	// Clean up
 	os.Remove(mockFile)
 }
 
@@ -77,15 +73,14 @@ func TestWriteToTextFile(t *testing.T) {
 
 	t.Parallel()
 
-	// Check that mock file does not exist
 	_, err := os.Stat(mockFile)
 	if !os.IsNotExist(err) {
 		t.Error("Mock file already exists")
 	}
 
-	CreateTextFile(mockFile)
+	shellspy.CreateTextFile(mockFile)
 
-	WriteToTextFile(mockFile, "echo hello", "hello")
+	shellspy.WriteToTextFile(mockFile, "echo hello", "hello")
 
 	data, err := os.ReadFile(mockFile)
 	if err != nil {
@@ -99,7 +94,5 @@ func TestWriteToTextFile(t *testing.T) {
 		t.Error("Mock transcript does not match input")
 	}
 
-	// Clean up
 	os.Remove(mockFile)
-
 }

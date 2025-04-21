@@ -26,3 +26,7 @@ Type "exit" without the quotation marks to exit
 # Acknowledgements
 
 Based on Bitfield Consulting's [shellspy project](https://github.com/bitfield/shellspy)
+
+# Feedback
+
+1. Place tests in shellspy_test package rather than directly in the shellspy package so that the tests have to interact with the public shellspy API. This gives a better sense of how actual users will interact with the API
