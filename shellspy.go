@@ -3,19 +3,19 @@ package shellspy
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"os"
 	"os/exec"
 	"strings"
 )
 
-func CommandFromString(input string) (*exec.Cmd, error) {
+func CommandFromString(input string) *exec.Cmd {
 	inputs := strings.Split(input, " ")
 	cmd := exec.Command(inputs[0], inputs[1:]...)
-	return cmd, nil
-	// how do I do error handling for exec.Command?
-	// e.g. if the input is not a terminal command
-	// https://pkg.go.dev/os/exec#Command
+	// exec.Command does not return an error immediately
+	// it only constructs a Cmd object
+	// error only when .Run(), .Output() or .CombinedOutput() is called
+	// where is this in the docs?? https://pkg.go.dev/os/exec#Command
+	return cmd
 }
 
 func ReadInputLoop(scanner bufio.Scanner) {
@@ -29,11 +29,7 @@ func ReadInputLoop(scanner bufio.Scanner) {
 			WriteToTextFile(transcript, "exit", "")
 			break
 		}
-		cmd, err := CommandFromString(input)
-		if err != nil {
-			log.Fatal(err)
-		}
-		// todo: sort out error handling
+		cmd := CommandFromString(input)
 		var out strings.Builder
 		cmd.Stdout = &out
 		cmd.Run()

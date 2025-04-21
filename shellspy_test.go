@@ -14,11 +14,7 @@ func TestCommandFromStringReturnsExecCmdObject(t *testing.T) {
 
 	cmd := exec.Command("ls")
 	want := cmd
-	got, err := shellspy.CommandFromString("ls")
-
-	if err != nil {
-		t.Error("Err: ", err)
-	}
+	got := shellspy.CommandFromString("ls")
 
 	// Cannot compare *exec.cmd objects directly
 
@@ -33,11 +29,7 @@ func TestCommandFromStringReturnsExecCmdObjectForMultipleInputs(t *testing.T) {
 
 	cmd := exec.Command("echo", "Hello")
 	want := cmd
-	got, err := shellspy.CommandFromString("echo Hello")
-
-	if err != nil {
-		t.Error("Err: ", err)
-	}
+	got := shellspy.CommandFromString("echo Hello")
 
 	// Cannot compare *exec.cmd objects directly
 
