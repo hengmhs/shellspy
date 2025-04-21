@@ -18,9 +18,7 @@ func CommandFromString(input string) *exec.Cmd {
 	return cmd
 }
 
-func ReadInputLoop(scanner bufio.Scanner) {
-	const transcript = "shellspy.txt"
-	CreateTextFile(transcript)
+func ReadInputLoop(scanner *bufio.Scanner, transcript string) {
 	for {
 		scanner.Scan()
 		text := scanner.Text()
@@ -59,4 +57,11 @@ func WriteToTextFile(fileName, command, output string) {
 	_, err = fmt.Fprintf(file, "> %v \n", command)
 	// Write the output
 	_, err = fmt.Fprintf(file, "%v \n", output)
+}
+
+func StartMainLoop() {
+	const transcript = "shellspy.txt"
+	CreateTextFile(transcript)
+	scanner := bufio.NewScanner(os.Stdin)
+	ReadInputLoop(scanner, transcript)
 }
