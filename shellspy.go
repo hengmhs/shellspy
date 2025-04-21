@@ -42,6 +42,8 @@ func ReadInputLoop(scanner *bufio.Scanner, transcript string, transcriptFile *os
 			// TODO: write a test that shows this error handling is working
 		}
 
+		// TODO: add formatting for transcript
+
 		// Tried to use cmd.Stdout = transcriptFile but that didn't do anything..
 		// How do I get the text formatting if I pipe it out directly?
 		// Keep getting exit status 1 or 2 errors
