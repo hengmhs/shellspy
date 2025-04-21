@@ -1,13 +1,9 @@
-> ls 
 cmd
 go.mod
 README.md
 shellspy.go
 shellspy_test.go
 shellspy.txt
- 
-> echo hello world 
 hello world
- 
 > exit 
  

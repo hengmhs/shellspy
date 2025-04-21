@@ -28,9 +28,13 @@ func ReadInputLoop(scanner *bufio.Scanner, transcript string, transcriptFile *os
 			break
 			// TODO: maybe return something here to check that the loop has broken?
 		}
+		fmt.Printf("file: %v\n", transcriptFile)
 		cmd := CommandFromString(input)
-		var out strings.Builder
-		cmd.Stdout = &out
+		fmt.Printf("Running command: %v\n", cmd.Args)
+
+		// var out strings.Builder
+		// cmd.Stdout = &out
+		cmd.Stdout = transcriptFile
 		err := cmd.Run()
 
 		if err != nil {
@@ -40,10 +44,11 @@ func ReadInputLoop(scanner *bufio.Scanner, transcript string, transcriptFile *os
 
 		// Tried to use cmd.Stdout = transcriptFile but that didn't do anything..
 		// How do I get the text formatting if I pipe it out directly?
+		// Keep getting exit status 1 or 2 errors
 
-		WriteToTextFile(transcript, input, out.String())
+		// WriteToTextFile(transcript, input, out.String())
 		// fmt.Printf("> %v\n", input)
-		fmt.Printf("%v", out.String())
+		// fmt.Printf("%v", out.String())
 	}
 }
 
@@ -52,7 +57,6 @@ func CreateTextFile(fileName string) *os.File {
 	if err != nil {
 		fmt.Printf("Failed to create file: %v", err)
 	}
-	defer file.Close()
 	return file
 }
 
@@ -74,6 +78,7 @@ func WriteToTextFile(fileName, command, output string) {
 func StartMainLoop() {
 	const transcriptFileName = "shellspy.txt"
 	transcriptFile := CreateTextFile(transcriptFileName)
+	defer transcriptFile.Close() // Close the file only after ReadInputLoop has written to it
 	scanner := bufio.NewScanner(os.Stdin)
 	ReadInputLoop(scanner, transcriptFileName, transcriptFile)
 }
